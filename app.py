@@ -618,6 +618,15 @@ elif menu == "Single Prediction":
                 "day": day,
             }
 
+            if targeted_productivity > 0.95:
+                st.warning("The selected target productivity is unusually high. Please confirm that this is realistic for the production context.")
+
+            if over_time > 15000:
+                st.warning("Over Time is very high compared with typical records in the dataset. Prediction reliability may be lower for extreme inputs.")
+
+            if no_of_workers > 80:
+                st.warning("Number of workers is unusually high. Please double-check the input value.")
+
             pred_input = prepare_prediction_input(pd.DataFrame([raw]), feature_cols)
             model = best_models[model_choice]
             pred = float(model.predict(pred_input)[0])
@@ -666,6 +675,18 @@ elif menu == "Single Prediction":
                 st.markdown(
                     "**Managerial implication:** Managers may need to review staffing efficiency, workload balance, "
                     "or other production conditions to improve expected performance."
+                )
+
+                        st.subheader("Business Recommendation")
+            if pred < targeted_productivity:
+                st.write(
+                    "Recommendation: Review workload balance, staffing efficiency, and production conditions before finalising this production plan. "
+                    "A lower predicted productivity suggests that the current setup may require adjustment."
+                )
+            else:
+                st.write(
+                    "Recommendation: The current setup appears feasible for meeting the target. Managers should continue monitoring consistency, "
+                    "especially if overtime, incentive, or worker allocation changes."
                 )
 
             st.info(
@@ -760,7 +781,11 @@ elif menu == "Batch Prediction":
 
         if missing_cols:
             st.error(f"Missing required columns: {missing_cols}")
-            st.info("Please use the sample template shown above.")
+            st.info(
+                "Please use the sample template shown above. "
+                "Required columns are: team, targeted_productivity, smv, wip, over_time, incentive, "
+                "idle_time, idle_men, no_of_style_change, no_of_workers, quarter, department, and day."
+            )
         else:
             pred_input = prepare_prediction_input(batch_df[keep_cols].copy(), feature_cols)
             model = best_models[model_choice]
