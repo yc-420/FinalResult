@@ -677,18 +677,6 @@ elif menu == "Single Prediction":
                     "or other production conditions to improve expected performance."
                 )
 
-            st.subheader("Business Recommendation")
-            if pred < targeted_productivity:
-                st.write(
-                    "Recommendation: Review workload balance, staffing efficiency, and production conditions before finalising this production plan. "
-                    "A lower predicted productivity suggests that the current setup may require adjustment."
-                )
-            else:
-                st.write(
-                    "Recommendation: The current setup appears feasible for meeting the target. Managers should continue monitoring consistency, "
-                    "especially if overtime, incentive, or worker allocation changes."
-                )
-
             st.info(
                 "This prediction should be used as decision support rather than a guaranteed outcome, "
                 "because actual productivity can still be affected by factors not included in the dataset."
