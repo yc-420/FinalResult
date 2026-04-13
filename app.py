@@ -677,7 +677,7 @@ elif menu == "Single Prediction":
                     "or other production conditions to improve expected performance."
                 )
 
-                        st.subheader("Business Recommendation")
+            st.subheader("Business Recommendation")
             if pred < targeted_productivity:
                 st.write(
                     "Recommendation: Review workload balance, staffing efficiency, and production conditions before finalising this production plan. "
